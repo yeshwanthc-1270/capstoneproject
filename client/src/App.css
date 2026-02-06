@@ -1,42 +1,141 @@
 #root {
-  max-width: 1280px;
-  margin: 0 auto;
-  padding: 2rem;
-  text-align: center;
+  @apply min-h-screen w-full;
+}
+
+/* Layout and Container */
+.container {
+  @apply max-w-7xl mx-auto px-4 sm:px-6 lg:px-8;
+}
+
+/* Hero Section */
+.hero-section {
+  @apply py-20 sm:py-32 bg-gradient-to-br from-dark via-dark to-secondary/20 relative overflow-hidden;
+}
+
+.hero-content {
+  @apply relative z-10 text-center;
+}
+
+.hero-title {
+  @apply gradient-text text-4xl sm:text-5xl lg:text-6xl font-bold mb-6 animate-fadeIn;
+}
+
+.hero-subtitle {
+  @apply text-gray-300 text-lg sm:text-xl mb-8 max-w-2xl mx-auto animate-slideInUp;
+}
+
+/* Animated Background Elements */
+.blob-top {
+  @apply absolute top-0 left-0 w-96 h-96 bg-primary rounded-full mix-blend-multiply filter blur-3xl opacity-20 animate-pulse -z-10;
+}
+
+.blob-bottom {
+  @apply absolute bottom-0 right-0 w-96 h-96 bg-secondary rounded-full mix-blend-multiply filter blur-3xl opacity-20 animate-pulse -z-10;
+}
+
+/* Navigation Bar */
+.navbar {
+  @apply sticky top-0 z-50 glass-effect border-b border-white/20 py-4;
+}
+
+.nav-container {
+  @apply max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex justify-between items-center;
 }
 
 .logo {
-  height: 6em;
-  padding: 1.5em;
-  will-change: filter;
-  transition: filter 300ms;
-}
-.logo:hover {
-  filter: drop-shadow(0 0 2em #646cffaa);
-}
-.logo.react:hover {
-  filter: drop-shadow(0 0 2em #61dafbaa);
+  @apply text-2xl font-bold gradient-text;
 }
 
-@keyframes logo-spin {
-  from {
-    transform: rotate(0deg);
+.nav-links {
+  @apply hidden md:flex gap-8;
+}
+
+.nav-link {
+  @apply text-gray-300 hover:text-white transition-colors duration-200 font-medium;
+}
+
+/* Feature Cards */
+.feature-card {
+  @apply card group relative overflow-hidden;
+}
+
+.feature-card::before {
+  content: '';
+  @apply absolute inset-0 bg-gradient-to-r from-primary/0 via-primary/10 to-secondary/0 opacity-0 group-hover:opacity-100 transition-opacity duration-300 -z-10;
+}
+
+.feature-icon {
+  @apply text-4xl mb-4 group-hover:scale-110 transition-transform duration-300;
+}
+
+/* Form Styling */
+.form-group {
+  @apply mb-6;
+}
+
+.form-label {
+  @apply block text-sm font-semibold mb-2 text-gray-200;
+}
+
+.form-input {
+  @apply input;
+}
+
+.form-error {
+  @apply text-red-400 text-sm mt-1;
+}
+
+/* Button Animations */
+.btn {
+  @apply relative overflow-hidden transition-all duration-300;
+}
+
+.btn::before {
+  content: '';
+  @apply absolute inset-0 bg-white/20 opacity-0 group-hover:opacity-100 transition-opacity duration-300;
+}
+
+/* Status Badges */
+.badge {
+  @apply inline-block px-3 py-1 rounded-full text-sm font-semibold;
+}
+
+.badge-success {
+  @apply bg-green-500/20 text-green-300;
+}
+
+.badge-warning {
+  @apply bg-yellow-500/20 text-yellow-300;
+}
+
+.badge-error {
+  @apply bg-red-500/20 text-red-300;
+}
+
+.badge-info {
+  @apply bg-blue-500/20 text-blue-300;
+}
+
+/* Floating Animation */
+@keyframes float {
+  0%, 100% {
+    transform: translateY(0);
   }
-  to {
-    transform: rotate(360deg);
+  50% {
+    transform: translateY(-20px);
   }
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  a:nth-of-type(2) .logo {
-    animation: logo-spin infinite 20s linear;
-  }
+.float {
+  @apply animate-[float_3s_ease-in-out_infinite];
 }
 
-.card {
-  padding: 2em;
+/* Grid Layout */
+.grid-responsive {
+  @apply grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6;
 }
 
-.read-the-docs {
-  color: #888;
+/* Smooth Scroll */
+* {
+  scroll-behavior: smooth;
 }
