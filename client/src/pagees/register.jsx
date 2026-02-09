@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
-import axios from "axios";
+import API from "../services/api";
 
 const Register = () => {
   const navigate = useNavigate();
@@ -22,7 +22,7 @@ const Register = () => {
     setError("");
 
     try {
-      const res = await axios.post("http://localhost:5000/api/auth/register", formData);
+      const res = await API.post("/auth/register", formData);
       if (res.data.success) {
         navigate("/login");
       }
@@ -32,69 +32,85 @@ const Register = () => {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gray-100">
-      <div className="bg-white p-8 rounded-lg shadow-md w-full max-w-md">
-        <h2 className="text-2xl font-bold text-center mb-6">
-          Create SkillMorph Account
-        </h2>
+    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-slate-50 to-slate-100 px-4 py-8">
+      <div className="bg-white rounded-2xl shadow-lg w-full max-w-md p-8 sm:p-10 animate-slideInUp">
+        <div className="mb-8">
+          <h2 className="text-3xl font-bold text-center text-slate-900 mb-2">
+            Create Account
+          </h2>
+          <p className="text-center text-slate-600">Join SkillMorph today</p>
+        </div>
 
         {error && (
-          <p className="text-red-500 text-sm text-center mb-3">
-            {error}
-          </p>
+          <div className="mb-6 p-4 bg-red-50 border border-red-200 rounded-lg">
+            <p className="text-red-700 text-sm font-medium text-center">
+              {error}
+            </p>
+          </div>
         )}
 
-        <form onSubmit={handleSubmit}>
-          <div className="mb-4">
-            <label className="block text-gray-700 mb-1">Full Name</label>
+        <form onSubmit={handleSubmit} className="space-y-5">
+          <div>
+            <label className="block text-sm font-semibold text-slate-900 mb-2">
+              Full Name
+            </label>
             <input
               type="text"
               name="name"
+              placeholder="John Doe"
               value={formData.name}
               onChange={handleChange}
               required
-              className="w-full px-3 py-2 border rounded focus:outline-none focus:ring"
+              className="w-full px-4 py-3 border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent transition-all"
             />
           </div>
 
-          <div className="mb-4">
-            <label className="block text-gray-700 mb-1">Email</label>
+          <div>
+            <label className="block text-sm font-semibold text-slate-900 mb-2">
+              Email Address
+            </label>
             <input
               type="email"
               name="email"
+              placeholder="you@example.com"
               value={formData.email}
               onChange={handleChange}
               required
-              className="w-full px-3 py-2 border rounded focus:outline-none focus:ring"
+              className="w-full px-4 py-3 border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent transition-all"
             />
           </div>
 
-          <div className="mb-6">
-            <label className="block text-gray-700 mb-1">Password</label>
+          <div>
+            <label className="block text-sm font-semibold text-slate-900 mb-2">
+              Password
+            </label>
             <input
               type="password"
               name="password"
+              placeholder="••••••••"
               value={formData.password}
               onChange={handleChange}
               required
-              className="w-full px-3 py-2 border rounded focus:outline-none focus:ring"
+              className="w-full px-4 py-3 border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent transition-all"
             />
           </div>
 
           <button
             type="submit"
-            className="w-full bg-blue-600 text-white py-2 rounded hover:bg-blue-700 transition"
+            className="w-full bg-primary hover:bg-blue-600 text-white font-semibold py-3 rounded-lg transition-all duration-200 hover:shadow-lg"
           >
-            Register
+            Create Account
           </button>
         </form>
 
-        <p className="text-center text-sm mt-4">
-          Already have an account?{" "}
-          <Link to="/login" className="text-blue-600 hover:underline">
-            Login
-          </Link>
-        </p>
+        <div className="mt-6 pt-6 border-t border-slate-200">
+          <p className="text-center text-slate-700">
+            Already have an account?{" "}
+            <Link to="/login" className="text-primary font-semibold hover:text-blue-600 transition-colors">
+              Sign in
+            </Link>
+          </p>
+        </div>
       </div>
     </div>
   );
