@@ -1,5 +1,6 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
+import { LogOut, User } from "lucide-react";
 
 const Navbar = () => {
   const navigate = useNavigate();
@@ -15,21 +16,23 @@ const Navbar = () => {
         <div className="flex justify-between items-center h-16 sm:h-20">
           {/* Logo */}
           <div className="flex items-center">
-            <h1 className="text-2xl sm:text-3xl font-bold font-display text-primary whitespace-nowrap">
+            <h1 className="text-2xl sm:text-3xl font-bold text-indigo-600 whitespace-nowrap">
               SkillMorph
             </h1>
           </div>
 
           {/* Right Section */}
-          <div className="flex items-center gap-4 sm:gap-6">
-            <span className="text-sm sm:text-base text-slate-700 font-medium hidden sm:inline">
-              Welcome, User
-            </span>
+          <div className="flex items-center gap-3 sm:gap-6">
+            <div className="hidden sm:flex items-center gap-2 text-slate-700">
+              <User size={18} />
+              <span className="text-sm font-medium">Welcome, User</span>
+            </div>
             <button
               onClick={handleLogout}
-              className="px-4 sm:px-6 py-2 sm:py-2.5 bg-error hover:bg-red-600 text-white font-semibold rounded-lg transition-all duration-200 hover:shadow-lg text-sm sm:text-base"
+              className="flex items-center gap-2 px-4 sm:px-6 py-2 sm:py-2.5 text-slate-700 hover:bg-slate-100 rounded-lg transition-all duration-200 font-semibold text-sm sm:text-base"
             >
-              Logout
+              <LogOut size={18} />
+              <span className="hidden sm:inline">Logout</span>
             </button>
           </div>
         </div>
