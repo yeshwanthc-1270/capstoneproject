@@ -200,6 +200,16 @@
     color: var(--text-secondary);
   }
 
+  /* ===== Dark-mode utility overrides ===== */
+  /* ensure Tailwind-generated backgrounds/borders/text adapt to dark variables */
+  .dark .bg-white { background-color: var(--bg-secondary) !important; }
+  .dark .bg-gray-100 { background-color: var(--bg-tertiary) !important; }
+  .dark .text-slate-900 { color: var(--text-primary) !important; }
+  .dark .border-slate-200 { border-color: var(--border-color) !important; }
+  .dark .hover\:bg-slate-50:hover { background-color: var(--bg-secondary) !important; }
+  .dark .text-slate-700 { color: var(--text-secondary) !important; }
+  .dark .hover\:bg-slate-100:hover { background-color: var(--bg-tertiary) !important; }
+
   /* ===== HR ===== */
   hr {
     border: none;

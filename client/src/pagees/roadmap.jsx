@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import Navbar from "../components/Navbar";
-import { CheckCircle2, Circle, Target } from "lucide-react";
+import { CheckCircle2, Circle, Target, TrendingUp } from "lucide-react";
 
 export default function Roadmap() {
   const [roadmap, setRoadmap] = useState([
@@ -83,17 +83,17 @@ export default function Roadmap() {
   };
 
   return (
-    <div className="min-h-screen bg-white">
+    <div className="min-h-screen" style={{ backgroundColor: 'var(--bg-primary)' }}>
       <Navbar />
 
       <main className="container mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-12">
         <div className="max-w-5xl mx-auto">
           {/* Header */}
           <div className="mb-8 sm:mb-12">
-            <h1 className="text-4xl sm:text-5xl font-bold text-slate-900 mb-2">
+            <h1 className="text-4xl sm:text-5xl font-bold" style={{ color: 'var(--text-primary)' }}>
               Career Roadmap
             </h1>
-            <p className="text-lg text-slate-600">
+            <p className="text-lg" style={{ color: 'var(--text-secondary)' }}>
               Your personalized learning journey to reach your career goals
             </p>
           </div>
@@ -103,7 +103,8 @@ export default function Roadmap() {
             {roadmap.map((milestone, idx) => (
               <div
                 key={milestone.id}
-                className="bg-white border border-slate-200 rounded-xl p-6 sm:p-8 hover:border-indigo-300 hover:shadow-md transition-all duration-300"
+                className="border rounded-xl p-6 sm:p-8 hover:border-indigo-300 hover:shadow-md transition-all duration-300"
+                style={{ backgroundColor: 'var(--bg-secondary)', borderColor: 'var(--border-color)' }}
               >
                 {/* Header */}
                 <div className="flex flex-col sm:flex-row sm:items-start sm:justify-between mb-6 gap-4">
@@ -111,20 +112,20 @@ export default function Roadmap() {
                     <div className="flex items-start gap-3 mb-2">
                       {getStatusIcon(milestone.status)}
                       <div>
-                        <h3 className="text-2xl sm:text-3xl font-bold text-slate-900">
+                        <h3 className="text-2xl sm:text-3xl font-bold" style={{ color: 'var(--text-primary)' }}>
                           {milestone.title}
                         </h3>
-                        <p className="text-slate-600 text-sm sm:text-base mt-1">
+                        <p className="text-sm sm:text-base mt-1" style={{ color: 'var(--text-secondary)' }}>
                           {milestone.description}
                         </p>
                       </div>
                     </div>
                   </div>
                   <div className="text-right">
-                    <p className="text-sm font-semibold text-slate-500">
+                    <p className="text-sm font-semibold" style={{ color: 'var(--text-secondary)' }}>
                       {milestone.duration}
                     </p>
-                    <p className="text-xs text-slate-400 capitalize mt-1">
+                    <p className="text-xs mt-1" style={{ color: 'var(--text-secondary)' }}>
                       {milestone.status.replace("-", " ")}
                     </p>
                   </div>
@@ -133,14 +134,14 @@ export default function Roadmap() {
                 {/* Progress Bar */}
                 <div className="mb-6">
                   <div className="flex items-center justify-between mb-2">
-                    <span className="text-sm font-semibold text-slate-700">
+                    <span className="text-sm font-semibold" style={{ color: 'var(--text-primary)' }}>
                       Progress
                     </span>
                     <span className="text-sm font-bold text-indigo-600">
                       {milestone.progress}%
                     </span>
                   </div>
-                  <div className="w-full bg-slate-200 rounded-full h-2 overflow-hidden">
+                  <div className="w-full rounded-full h-2 overflow-hidden" style={{ backgroundColor: 'var(--bg-tertiary)' }}>
                     <div
                       className="bg-gradient-to-r from-indigo-500 to-indigo-600 h-2 rounded-full transition-all duration-500"
                       style={{ width: `${milestone.progress}%` }}
@@ -150,14 +151,20 @@ export default function Roadmap() {
 
                 {/* Tasks */}
                 <div className="mb-6">
-                  <h4 className="font-bold text-slate-900 text-sm uppercase tracking-wider mb-4">
+                  <h4 className="font-bold text-sm uppercase tracking-wider mb-4" style={{ color: 'var(--text-primary)' }}>
                     Learning Goals
                   </h4>
                   <div className="space-y-2">
                     {milestone.tasks.map((task, taskIdx) => (
                       <label
                         key={taskIdx}
-                        className="flex items-center gap-3 p-3 rounded-lg hover:bg-slate-50 cursor-pointer group transition-colors"
+                        className="flex items-center gap-3 p-3 rounded-lg cursor-pointer group transition-colors"
+                        style={{
+                          backgroundColor: 'transparent',
+                          color: 'var(--text-primary)'
+                        }}
+                        onMouseEnter={(e) => e.currentTarget.style.backgroundColor = 'var(--bg-tertiary)' }
+                        onMouseLeave={(e) => e.currentTarget.style.backgroundColor = 'transparent'}
                       >
                         <input
                           type="checkbox"
@@ -168,9 +175,12 @@ export default function Roadmap() {
                         <span
                           className={`text-sm sm:text-base transition-all flex-1 ${
                             task.completed
-                              ? "line-through text-slate-400"
-                              : "text-slate-700 font-medium"
+                              ? "line-through"
+                              : "font-medium"
                           }`}
+                          style={{
+                            color: task.completed ? 'var(--text-secondary)' : 'var(--text-primary)'
+                          }}
                         >
                           {task.name}
                         </span>
@@ -183,11 +193,17 @@ export default function Roadmap() {
                 </div>
 
                 {/* Action Buttons */}
-                <div className="pt-6 border-t border-slate-200 flex gap-3">
+                <div className="pt-6 flex gap-3" style={{ borderTopColor: 'var(--border-color)', borderTopWidth: '1px' }}>
                   <button className="flex-1 px-4 py-2.5 bg-indigo-600 hover:bg-indigo-700 text-white font-semibold rounded-lg transition-all duration-200 hover:shadow-md text-sm sm:text-base">
                     View Resources
                   </button>
-                  <button className="flex-1 px-4 py-2.5 border border-indigo-600 text-indigo-600 hover:bg-indigo-50 font-semibold rounded-lg transition-all duration-200 text-sm sm:text-base">
+                  <button className="flex-1 px-4 py-2.5 font-semibold rounded-lg transition-all duration-200 text-sm sm:text-base" style={{
+                    backgroundColor: 'var(--bg-tertiary)',
+                    color: 'var(--color-primary)',
+                    border: '1px solid var(--border-color)'
+                  }}
+                  onMouseEnter={(e) => e.currentTarget.style.backgroundColor = 'var(--bg-primary)'}
+                  onMouseLeave={(e) => e.currentTarget.style.backgroundColor = 'var(--bg-tertiary)'}>
                     Get Help
                   </button>
                 </div>
@@ -196,7 +212,7 @@ export default function Roadmap() {
           </div>
 
           {/* Summary Card */}
-          <div className="bg-gradient-to-br from-indigo-600 to-indigo-700 rounded-xl p-6 sm:p-8 text-white">
+          <div className="rounded-xl p-6 sm:p-8 text-white" style={{ background: 'linear-gradient(to bottom right, #4f46e5, #4338ca)' }}>
             <div className="grid grid-cols-1 sm:grid-cols-3 gap-6 text-center">
               <div>
                 <div className="flex items-center justify-center gap-2 mb-2">

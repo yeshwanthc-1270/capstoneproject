@@ -1,21 +1,28 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import { ArrowRight, FileText, Target, Map } from "lucide-react";
+import DarkModeToggle from "../components/DarkModeToggle";
 
 export default function Landing() {
   return (
-    <div className="min-h-screen bg-white">
+    <div className="min-h-screen" style={{ backgroundColor: 'var(--bg-primary)' }}>
       {/* Navigation */}
-      <nav className="bg-white border-b border-slate-200 sticky top-0 z-50">
+      <nav className="sticky top-0 z-50 w-full" style={{
+        backgroundColor: 'var(--bg-secondary)',
+        borderBottomColor: 'var(--border-color)',
+        borderBottomWidth: '1px'
+      }}>
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex justify-between items-center h-16 sm:h-20">
             <h1 className="text-2xl sm:text-3xl font-bold text-indigo-600">
               SkillMorph
             </h1>
-            <div className="flex gap-3 sm:gap-4">
+            <div className="flex gap-3 sm:gap-4 items-center">
+              <DarkModeToggle />
               <Link 
                 to="/login" 
-                className="px-4 sm:px-6 py-2 sm:py-2.5 text-slate-700 hover:bg-slate-100 font-semibold rounded-lg transition-colors"
+                className="px-4 sm:px-6 py-2 sm:py-2.5 font-semibold rounded-lg transition-colors"
+                style={{ color: 'var(--text-secondary)' }}
               >
                 Sign In
               </Link>
@@ -31,7 +38,9 @@ export default function Landing() {
       </nav>
 
       {/* Hero Section */}
-      <div className="bg-gradient-to-b from-white via-indigo-50 to-white">
+      <div style={{
+        background: 'linear-gradient(to bottom, var(--bg-primary), var(--bg-secondary), var(--bg-primary))'
+      }}>
         <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-16 sm:py-24 lg:py-32">
           <div className="max-w-3xl mx-auto text-center">
             <h2 className="text-5xl sm:text-6xl lg:text-7xl font-bold text-slate-900 mb-6 leading-tight">

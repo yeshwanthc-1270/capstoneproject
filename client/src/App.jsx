@@ -8,11 +8,10 @@ import JobMatch from "./pagees/jobmatch";
 import Roadmap from "./pagees/roadmap";
 import Landing from "./pagees/landing";
 import { ThemeProvider } from "./context/ThemeContext";
+import Sidebar from "./components/Sidebar";
 
 // Protected Route Component with Sidebar
 const ProtectedLayout = ({ children }) => {
-  const Sidebar = require("./components/Sidebar").default;
-  
   return (
     <div className="flex">
       <Sidebar />

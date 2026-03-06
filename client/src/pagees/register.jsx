@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
 import API from "../services/api";
+import DarkModeToggle from "../components/DarkModeToggle";
 
 const Register = () => {
   const navigate = useNavigate();
@@ -33,7 +34,10 @@ const Register = () => {
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-slate-50 to-slate-100 px-4 py-8">
-      <div className="bg-white rounded-2xl shadow-lg w-full max-w-md p-8 sm:p-10 animate-slideInUp">
+      <div className="bg-white rounded-2xl shadow-lg w-full max-w-md p-8 sm:p-10 animate-slideInUp relative">
+        <div className="absolute top-4 right-4">
+          <DarkModeToggle />
+        </div>
         <div className="mb-8">
           <h2 className="text-3xl font-bold text-center text-slate-900 mb-2">
             Create Account
