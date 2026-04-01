@@ -6,6 +6,7 @@ import authRoutes from "./routes/authRoutes.js";
 import resumeRoutes from "./routes/resumeRoutes.js";
 import jdRoutes from "./routes/jdRoutes.js";
 import roadmapRoutes from "./routes/roadmapRoutes.js";
+import analysisRoutes from "./routes/analysisRoutes.js";
 
 dotenv.config();
 
@@ -18,6 +19,7 @@ app.use(express.json());
 app.use("/api/auth", authRoutes);
 app.use("/api/resume", resumeRoutes);
 app.use("/api/analyze", jdRoutes);
+app.use("/api/analysis", analysisRoutes);
 app.use("/api/roadmap", roadmapRoutes);
 
 // MongoDB Connection

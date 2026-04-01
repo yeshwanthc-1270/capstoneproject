@@ -1,53 +1,50 @@
 import React, { useState } from "react";
 import Navbar from "../components/Navbar";
-import { CheckCircle2, Circle, Target, TrendingUp } from "lucide-react";
+import { CheckCircle2, Circle, Target, TrendingUp, Loader2, BookOpen } from "lucide-react";
 
 export default function Roadmap() {
-  const [roadmap, setRoadmap] = useState([
-    {
-      id: 1,
-      title: "JavaScript & React Fundamentals",
-      description: "Master core JavaScript concepts and React hooks",
-      progress: 75,
-      duration: "4 weeks",
-      status: "in-progress",
-      tasks: [
-        { name: "ES6 Basics", completed: true },
-        { name: "React Hooks", completed: true },
-        { name: "State Management", completed: false },
-        { name: "Advanced Patterns", completed: false },
-      ],
-    },
-    {
-      id: 2,
-      title: "Full-Stack Development",
-      description: "Build complete MERN applications",
-      progress: 45,
-      duration: "6 weeks",
-      status: "in-progress",
-      tasks: [
-        { name: "Backend Setup", completed: true },
-        { name: "REST APIs", completed: true },
-        { name: "Database Design", completed: false },
-        { name: "Authentication", completed: false },
-        { name: "Deployment", completed: false },
-      ],
-    },
-    {
-      id: 3,
-      title: "Data Structures & Algorithms",
-      description: "Prepare for technical interviews",
-      progress: 30,
-      duration: "8 weeks",
-      status: "not-started",
-      tasks: [
-        { name: "Arrays & Strings", completed: false },
-        { name: "Trees & Graphs", completed: false },
-        { name: "Dynamic Programming", completed: false },
-        { name: "Mock Interviews", completed: false },
-      ],
-    },
-  ]);
+  const [selectedRole, setSelectedRole] = useState("");
+  const [roadmap, setRoadmap] = useState(null);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState(null);
+
+  const roles = [
+    "frontend",
+    "backend",
+    "fullstack",
+    "data",
+    "devops",
+    "mobile",
+    "game",
+    "blockchain"
+  ];
+
+  const handleGenerateRoadmap = async () => {
+    if (!selectedRole) {
+      alert("Please select a role");
+      return;
+    }
+
+    setLoading(true);
+    setError(null);
+
+    try {
+      const response = await fetch(`http://localhost:5000/api/analysis/roadmap?role=${selectedRole}`);
+
+      if (!response.ok) {
+        throw new Error("Failed to generate roadmap");
+      }
+
+      const data = await response.json();
+      setRoadmap(data.roadmap);
+
+    } catch (err) {
+      console.error("Error:", err);
+      setError("Failed to generate roadmap. Please try again.");
+    } finally {
+      setLoading(false);
+    }
+  };
 
   const toggleTask = (roadmapId, taskIndex) => {
     setRoadmap(
@@ -83,139 +80,130 @@ export default function Roadmap() {
   };
 
   return (
-    <div className="min-h-screen" style={{ backgroundColor: 'var(--bg-primary)' }}>
+    <div className="min-h-screen bg-white">
       <Navbar />
 
       <main className="container mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-12">
-        <div className="max-w-5xl mx-auto">
+        <div className="max-w-4xl mx-auto">
           {/* Header */}
           <div className="mb-8 sm:mb-12">
-            <h1 className="text-4xl sm:text-5xl font-bold" style={{ color: 'var(--text-primary)' }}>
+            <h1 className="text-4xl sm:text-5xl font-bold text-slate-900 mb-2">
               Career Roadmap
             </h1>
-            <p className="text-lg" style={{ color: 'var(--text-secondary)' }}>
-              Your personalized learning journey to reach your career goals
+            <p className="text-lg text-slate-600">
+              Get a personalized learning path for your chosen career role
             </p>
           </div>
 
-          {/* Roadmap Cards */}
-          <div className="space-y-6 sm:space-y-8 mb-12">
-            {roadmap.map((milestone, idx) => (
-              <div
-                key={milestone.id}
-                className="border rounded-xl p-6 sm:p-8 hover:border-indigo-300 hover:shadow-md transition-all duration-300"
-                style={{ backgroundColor: 'var(--bg-secondary)', borderColor: 'var(--border-color)' }}
-              >
-                {/* Header */}
-                <div className="flex flex-col sm:flex-row sm:items-start sm:justify-between mb-6 gap-4">
-                  <div className="flex-1">
-                    <div className="flex items-start gap-3 mb-2">
-                      {getStatusIcon(milestone.status)}
-                      <div>
-                        <h3 className="text-2xl sm:text-3xl font-bold" style={{ color: 'var(--text-primary)' }}>
-                          {milestone.title}
-                        </h3>
-                        <p className="text-sm sm:text-base mt-1" style={{ color: 'var(--text-secondary)' }}>
-                          {milestone.description}
-                        </p>
-                      </div>
-                    </div>
-                  </div>
-                  <div className="text-right">
-                    <p className="text-sm font-semibold" style={{ color: 'var(--text-secondary)' }}>
-                      {milestone.duration}
-                    </p>
-                    <p className="text-xs mt-1" style={{ color: 'var(--text-secondary)' }}>
-                      {milestone.status.replace("-", " ")}
-                    </p>
-                  </div>
-                </div>
-
-                {/* Progress Bar */}
-                <div className="mb-6">
-                  <div className="flex items-center justify-between mb-2">
-                    <span className="text-sm font-semibold" style={{ color: 'var(--text-primary)' }}>
-                      Progress
-                    </span>
-                    <span className="text-sm font-bold text-indigo-600">
-                      {milestone.progress}%
-                    </span>
-                  </div>
-                  <div className="w-full rounded-full h-2 overflow-hidden" style={{ backgroundColor: 'var(--bg-tertiary)' }}>
-                    <div
-                      className="bg-gradient-to-r from-indigo-500 to-indigo-600 h-2 rounded-full transition-all duration-500"
-                      style={{ width: `${milestone.progress}%` }}
-                    />
-                  </div>
-                </div>
-
-                {/* Tasks */}
-                <div className="mb-6">
-                  <h4 className="font-bold text-sm uppercase tracking-wider mb-4" style={{ color: 'var(--text-primary)' }}>
-                    Learning Goals
-                  </h4>
-                  <div className="space-y-2">
-                    {milestone.tasks.map((task, taskIdx) => (
-                      <label
-                        key={taskIdx}
-                        className="flex items-center gap-3 p-3 rounded-lg cursor-pointer group transition-colors"
-                        style={{
-                          backgroundColor: 'transparent',
-                          color: 'var(--text-primary)'
-                        }}
-                        onMouseEnter={(e) => e.currentTarget.style.backgroundColor = 'var(--bg-tertiary)' }
-                        onMouseLeave={(e) => e.currentTarget.style.backgroundColor = 'transparent'}
-                      >
-                        <input
-                          type="checkbox"
-                          checked={task.completed}
-                          onChange={() => toggleTask(milestone.id, taskIdx)}
-                          className="w-5 h-5 text-indigo-600 rounded focus:ring-2 focus:ring-indigo-300 cursor-pointer"
-                        />
-                        <span
-                          className={`text-sm sm:text-base transition-all flex-1 ${
-                            task.completed
-                              ? "line-through"
-                              : "font-medium"
-                          }`}
-                          style={{
-                            color: task.completed ? 'var(--text-secondary)' : 'var(--text-primary)'
-                          }}
-                        >
-                          {task.name}
-                        </span>
-                        {task.completed && (
-                          <CheckCircle2 size={18} className="text-green-600 flex-shrink-0" />
-                        )}
-                      </label>
-                    ))}
-                  </div>
-                </div>
-
-                {/* Action Buttons */}
-                <div className="pt-6 flex gap-3" style={{ borderTopColor: 'var(--border-color)', borderTopWidth: '1px' }}>
-                  <button className="flex-1 px-4 py-2.5 bg-indigo-600 hover:bg-indigo-700 text-white font-semibold rounded-lg transition-all duration-200 hover:shadow-md text-sm sm:text-base">
-                    View Resources
-                  </button>
-                  <button className="flex-1 px-4 py-2.5 font-semibold rounded-lg transition-all duration-200 text-sm sm:text-base" style={{
-                    backgroundColor: 'var(--bg-tertiary)',
-                    color: 'var(--color-primary)',
-                    border: '1px solid var(--border-color)'
-                  }}
-                  onMouseEnter={(e) => e.currentTarget.style.backgroundColor = 'var(--bg-primary)'}
-                  onMouseLeave={(e) => e.currentTarget.style.backgroundColor = 'var(--bg-tertiary)'}>
-                    Get Help
-                  </button>
-                </div>
+          {/* Role Selector */}
+          <div className="bg-white border border-slate-200 rounded-xl p-6 sm:p-8 mb-8">
+            <div className="flex items-center gap-3 mb-6">
+              <div className="p-2 bg-indigo-50 rounded-lg">
+                <BookOpen className="text-indigo-600" size={24} />
               </div>
-            ))}
+              <div>
+                <h2 className="text-2xl font-bold text-slate-900">
+                  Select Your Career Path
+                </h2>
+                <p className="text-sm text-slate-600 mt-1">Choose a role to generate your learning roadmap</p>
+              </div>
+            </div>
+
+            <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 mb-6">
+              {roles.map((role) => (
+                <button
+                  key={role}
+                  onClick={() => setSelectedRole(role)}
+                  className={`px-4 py-3 rounded-lg font-medium text-sm capitalize transition-all ${
+                    selectedRole === role
+                      ? "bg-indigo-600 text-white shadow-md"
+                      : "bg-slate-100 text-slate-700 hover:bg-slate-200"
+                  }`}
+                >
+                  {role}
+                </button>
+              ))}
+            </div>
+
+            <button
+              onClick={handleGenerateRoadmap}
+              disabled={!selectedRole || loading}
+              className="w-full px-6 py-4 bg-indigo-600 hover:bg-indigo-700 disabled:bg-slate-300 text-white font-semibold rounded-lg transition-all duration-200 hover:shadow-md flex items-center justify-center gap-2"
+            >
+              {loading ? (
+                <>
+                  <Loader2 className="animate-spin" size={20} />
+                  Generating Roadmap...
+                </>
+              ) : (
+                "Generate Roadmap"
+              )}
+            </button>
           </div>
 
-          {/* Summary Card */}
-          <div className="rounded-xl p-6 sm:p-8 text-white" style={{ background: 'linear-gradient(to bottom right, #4f46e5, #4338ca)' }}>
-            <div className="grid grid-cols-1 sm:grid-cols-3 gap-6 text-center">
-              <div>
-                <div className="flex items-center justify-center gap-2 mb-2">
+          {/* Error Message */}
+          {error && (
+            <div className="bg-red-50 border border-red-200 rounded-xl p-4 mb-8">
+              <div className="flex items-center gap-3">
+                <div className="flex items-center gap-3">
+                  <p className="text-red-800 font-semibold">{error}</p>
+                </div>
+              </div>
+            </div>
+          )}
+
+          {/* Roadmap Display */}
+          {roadmap && (
+            <div className="space-y-6">
+              <div className="bg-white border border-slate-200 rounded-xl p-6 sm:p-8">
+                <h3 className="text-2xl font-bold text-slate-900 mb-6 capitalize">
+                  {selectedRole} Development Roadmap
+                </h3>
+
+                <div className="space-y-6">
+                  {roadmap.map((phase, index) => (
+                    <div key={index} className="border border-slate-200 rounded-lg p-6">
+                      <div className="flex items-start gap-4">
+                        <div className="flex-shrink-0 w-8 h-8 bg-indigo-600 text-white rounded-full flex items-center justify-center font-bold text-sm">
+                          {index + 1}
+                        </div>
+                        <div className="flex-1">
+                          <h4 className="text-xl font-bold text-slate-900 mb-2">
+                            {phase.phase}
+                          </h4>
+                          <p className="text-indigo-600 font-medium mb-3">
+                            Duration: {phase.duration}
+                          </p>
+                          <p className="text-slate-600 mb-4">
+                            {phase.description}
+                          </p>
+
+                          <div className="mb-4">
+                            <h5 className="font-semibold text-slate-900 mb-2">Key Skills:</h5>
+                            <div className="flex flex-wrap gap-2">
+                              {phase.skills.map((skill, skillIndex) => (
+                                <span
+                                  key={skillIndex}
+                                  className="px-3 py-1 bg-indigo-100 text-indigo-800 rounded-full text-sm font-medium"
+                                >
+                                  {skill}
+                                </span>
+                              ))}
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            </div>
+          )}
+        </div>
+      </main>
+    </div>
+  );
+}
                   <TrendingUp size={20} />
                   <p className="text-4xl sm:text-5xl font-bold">
                     {Math.round(

@@ -4,6 +4,7 @@ import Register from "./pagees/register";
 import Dashboard from "./pagees/dashboard";
 import ResumeUpload from "./pagees/resumeupload";
 import ResumeAnalyzer from "./pagees/resumeanalyzer";
+import ResumeGenerator from "./pagees/resumeGenerator";
 import JobMatch from "./pagees/jobmatch";
 import Roadmap from "./pagees/roadmap";
 import Landing from "./pagees/landing";
@@ -76,6 +77,14 @@ function App() {
             element={
               <ProtectedRoute>
                 <Roadmap />
+              </ProtectedRoute>
+            } 
+          />
+          <Route 
+            path="/generate" 
+            element={
+              <ProtectedRoute>
+                <ResumeGenerator />
               </ProtectedRoute>
             } 
           />

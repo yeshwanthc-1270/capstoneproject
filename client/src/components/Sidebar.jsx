@@ -1,5 +1,5 @@
 import { Link, useLocation } from "react-router-dom";
-import { FileText, Briefcase, Map, Home, LogOut, Moon, Sun } from "lucide-react";
+import { FileText, Briefcase, Map, Home, LogOut, Moon, Sun, PenTool } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import { useTheme } from "../context/ThemeContext";
 
@@ -18,6 +18,7 @@ const Sidebar = () => {
   const navItems = [
     { path: "/dashboard", label: "Dashboard", icon: Home },
     { path: "/analyze", label: "Resume Analyzer", icon: FileText },
+    { path: "/generate", label: "Resume Generator", icon: PenTool },
     { path: "/match", label: "Job Matching", icon: Briefcase },
     { path: "/roadmap", label: "Career Roadmap", icon: Map },
   ];
