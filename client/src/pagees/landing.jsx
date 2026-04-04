@@ -21,8 +21,7 @@ export default function Landing() {
               <DarkModeToggle />
               <Link 
                 to="/login" 
-                className="px-4 sm:px-6 py-2 sm:py-2.5 font-semibold rounded-lg transition-colors"
-                style={{ color: 'var(--text-secondary)' }}
+                className="px-4 sm:px-6 py-2 sm:py-2.5 font-semibold rounded-lg transition-colors text-slate-900 dark:text-slate-100 hover:bg-slate-200 dark:hover:bg-slate-700"
               >
                 Sign In
               </Link>

@@ -2,6 +2,7 @@
 import matchSkills from "../utils/skillMatcher.js";
 import calculateATS from "../utils/atsCalculator.js";
 import generateRoadmap from "../utils/roadmapGenerator.js";
+import User from "../models/User.js";
 import { generateResume, generateResumeText, generateResumeHTML } from "../utils/resumeGenerator.js";
 import { generateResumePDF } from "../utils/pdfGenerator.js";
 
@@ -124,6 +125,69 @@ const getRoadmap = (req, res) => {
     console.error("Roadmap generation error:", error);
     res.status(500).json({
       error: "Failed to generate roadmap"
+    });
+  }
+};
+
+const saveRoadmapProgress = async (req, res) => {
+  try {
+    const { role, roadmap } = req.body;
+
+    if (!role || !roadmap) {
+      return res.status(400).json({
+        error: "Role and roadmap are required"
+      });
+    }
+
+    const formattedRoadmap = roadmap.map((phase) => ({
+      phase: phase.phase,
+      duration: phase.duration,
+      description: phase.description,
+      skills: phase.skills || [],
+      progress: phase.progress || 0,
+      tasks: (phase.tasks || []).map((task) => ({
+        task: typeof task === "string" ? task : task.task,
+        completed: !!task.completed
+      })),
+      resources: phase.resources || {}
+    }));
+
+    const roadmapProgress = {
+      role,
+      phases: formattedRoadmap,
+      updatedAt: new Date()
+    };
+
+    const user = await User.findByIdAndUpdate(
+      req.user.id,
+      { roadmapProgress },
+      { new: true }
+    );
+
+    res.json({
+      success: true,
+      roadmapProgress: user?.roadmapProgress || roadmapProgress
+    });
+  } catch (error) {
+    console.error("Roadmap progress save error:", error);
+    res.status(500).json({
+      error: "Failed to save roadmap progress"
+    });
+  }
+};
+
+const getRoadmapProgress = async (req, res) => {
+  try {
+    const user = await User.findById(req.user.id).select("roadmapProgress");
+
+    res.json({
+      success: true,
+      roadmapProgress: user?.roadmapProgress || null
+    });
+  } catch (error) {
+    console.error("Roadmap progress fetch error:", error);
+    res.status(500).json({
+      error: "Failed to load roadmap progress"
     });
   }
 };
@@ -288,6 +352,8 @@ export {
   matchJob,
   calculateATSScore,
   getRoadmap,
+  saveRoadmapProgress,
+  getRoadmapProgress,
   generateResumeEndpoint as generateResume,
   generateResumeTextEndpoint as generateResumeText,
   generateResumeHTMLEndpoint as generateResumeHTML,

@@ -16,11 +16,11 @@ const Sidebar = () => {
   };
 
   const navItems = [
-    { path: "/dashboard", label: "Dashboard", icon: Home },
-    { path: "/analyze", label: "Resume Analyzer", icon: FileText },
-    { path: "/generate", label: "Resume Generator", icon: PenTool },
-    { path: "/match", label: "Job Matching", icon: Briefcase },
-    { path: "/roadmap", label: "Career Roadmap", icon: Map },
+    { path: "/dashboard", label: "Dashboard", icon: Home, description: "Your career hub" },
+    { path: "/match", label: "Job Matching", icon: Briefcase, description: "Find perfect jobs" },
+    { path: "/analyze", label: "Resume Analyzer", icon: FileText, description: "Analyze your resume" },
+    { path: "/generate", label: "Resume Builder", icon: PenTool, description: "Create resumes" },
+    { path: "/roadmap", label: "Career Roadmap", icon: Map, description: "Plan your career" },
   ];
 
   return (
@@ -46,10 +46,10 @@ const Sidebar = () => {
             <Link
               key={item.path}
               to={item.path}
-              className={`flex items-center gap-3 px-4 py-3 rounded-lg transition-all duration-200 ${
+              className={`group flex items-center gap-3 px-4 py-3 rounded-lg transition-all duration-200 ${
                 active
-                  ? "font-semibold"
-                  : ""
+                  ? "font-semibold shadow-sm"
+                  : "hover:bg-opacity-50"
               }`}
               style={{
                 backgroundColor: active ? 'rgba(79, 70, 229, 0.1)' : 'transparent',
@@ -58,7 +58,14 @@ const Sidebar = () => {
               }}
             >
               <Icon size={20} />
-              <span>{item.label}</span>
+              <div className="flex-1">
+                <div className="font-medium">{item.label}</div>
+                <div className={`text-xs transition-opacity duration-200 ${
+                  active ? 'opacity-100' : 'opacity-0 group-hover:opacity-100'
+                }`} style={{ color: 'var(--text-secondary)' }}>
+                  {item.description}
+                </div>
+              </div>
             </Link>
           );
         })}

@@ -32,61 +32,67 @@ const ProtectedRoute = ({ children }) => {
   );
 };
 
+// Root Route Component - Redirects based on auth status
+const RootRoute = () => {
+  const token = localStorage.getItem("token");
+  return token ? <Navigate to="/dashboard" /> : <Landing />;
+};
+
 function App() {
   return (
     <ThemeProvider>
       <BrowserRouter>
         <Routes>
-          <Route path="/" element={<Landing />} />
+          <Route path="/" element={<RootRoute />} />
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />
-          <Route 
-            path="/dashboard" 
+          <Route
+            path="/dashboard"
             element={
               <ProtectedRoute>
                 <Dashboard />
               </ProtectedRoute>
-            } 
+            }
           />
-          <Route 
-            path="/upload" 
+          <Route
+            path="/upload"
             element={
               <ProtectedRoute>
                 <ResumeUpload />
               </ProtectedRoute>
-            } 
+            }
           />
-          <Route 
-            path="/analyze" 
+          <Route
+            path="/analyze"
             element={
               <ProtectedRoute>
                 <ResumeAnalyzer />
               </ProtectedRoute>
-            } 
+            }
           />
-          <Route 
-            path="/match" 
+          <Route
+            path="/match"
             element={
               <ProtectedRoute>
                 <JobMatch />
               </ProtectedRoute>
-            } 
+            }
           />
-          <Route 
-            path="/roadmap" 
+          <Route
+            path="/roadmap"
             element={
               <ProtectedRoute>
                 <Roadmap />
               </ProtectedRoute>
-            } 
+            }
           />
-          <Route 
-            path="/generate" 
+          <Route
+            path="/generate"
             element={
               <ProtectedRoute>
                 <ResumeGenerator />
               </ProtectedRoute>
-            } 
+            }
           />
           <Route path="*" element={<Navigate to="/" />} />
         </Routes>

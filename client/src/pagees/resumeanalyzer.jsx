@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import Navbar from "../components/Navbar";
 import { UploadCloud, CheckCircle2, AlertCircle, TrendingUp, FileText, Loader2 } from "lucide-react";
-import pdfParse from "pdf-parse";
+import { PDFParse } from "pdf-parse";
 
 const ResumeAnalyzer = () => {
   const [file, setFile] = useState(null);
@@ -20,8 +20,10 @@ const ResumeAnalyzer = () => {
 
   const extractTextFromPDF = async (file) => {
     const arrayBuffer = await file.arrayBuffer();
-    const data = await pdfParse(new Uint8Array(arrayBuffer));
-    return data.text;
+    const parser = new PDFParse({ data: new Uint8Array(arrayBuffer) });
+    const textResult = await parser.getText();
+    await parser.destroy();
+    return textResult.text;
   };
 
   const handleAnalyze = async () => {
@@ -258,3 +260,5 @@ const ResumeAnalyzer = () => {
     </div>
   );
 }
+
+export default ResumeAnalyzer;

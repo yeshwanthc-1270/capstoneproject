@@ -6,7 +6,10 @@ import authRoutes from "./routes/authRoutes.js";
 import resumeRoutes from "./routes/resumeRoutes.js";
 import jdRoutes from "./routes/jdRoutes.js";
 import roadmapRoutes from "./routes/roadmapRoutes.js";
+import roadmapProgressRoutes from "./routes/roadmapProgressRoutes.js";
 import analysisRoutes from "./routes/analysisRoutes.js";
+import userRoutes from "./routes/userRoutes.js";
+import jobMatchRoutes from "./routes/jobMatchRoutes.js";
 
 dotenv.config();
 
@@ -21,6 +24,9 @@ app.use("/api/resume", resumeRoutes);
 app.use("/api/analyze", jdRoutes);
 app.use("/api/analysis", analysisRoutes);
 app.use("/api/roadmap", roadmapRoutes);
+app.use("/api/roadmap-progress", roadmapProgressRoutes);
+app.use("/api/user", userRoutes);
+app.use("/api/job-match", jobMatchRoutes);
 
 // MongoDB Connection
 mongoose

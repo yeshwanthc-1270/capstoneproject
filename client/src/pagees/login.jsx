@@ -80,7 +80,7 @@ const Login = () => {
 
           <button 
             type="submit"
-            className="w-full bg-primary hover:bg-blue-600 text-white font-semibold py-3 rounded-lg transition-all duration-200 hover:shadow-lg"
+            className="w-full bg-indigo-600 hover:bg-indigo-700 text-white font-semibold py-3 rounded-lg transition-all duration-200 hover:shadow-lg"
           >
             Sign In
           </button>
@@ -89,7 +89,7 @@ const Login = () => {
         <div className="mt-6 pt-6 border-t border-slate-200">
           <p className="text-center text-slate-700">
             Don't have an account?{" "}
-            <Link to="/register" className="text-primary font-semibold hover:text-blue-600 transition-colors">
+            <Link to="/register" className="text-indigo-600 font-semibold hover:text-indigo-700 transition-colors">
               Sign up
             </Link>
           </p>

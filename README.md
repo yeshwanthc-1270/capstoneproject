@@ -52,7 +52,13 @@ npm install
 npm run dev
 ```
 
-3. **Access the application:**
+3. **Start both servers together:**
+```powershell
+cd c:\Users\MOUNISH.C\capstone\capstoneproject
+.\run-all.ps1
+```
+
+4. **Access the application:**
 - Frontend: http://localhost:5173
 - Backend: http://localhost:5000
 
